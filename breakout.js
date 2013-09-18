@@ -28,6 +28,10 @@
      var paddlecolor = "#FFFFFF";
      var ballcolor = "#FFFFFF";
      var backcolor = "#000000";
+     var colorending = ["I", "L", "O", "V", "E", "Y", "O", "U", "C", "R", "Y", "S", "T", "A", "L"];
+     var ending = 5;
+     var topbar;
+     var numBricks = 0;
      rightDown = false;
      leftDown = false;
 
@@ -46,6 +50,7 @@
      }
 
      function initbricks() {
+	 
 	 bricks = new Array(NROWS);
 	 for (i=0; i < NROWS; i++) {
 	     bricks[i] = new Array(NCOLS);
@@ -113,14 +118,23 @@
 	 rect(0,0,WIDTH,HEIGHT);
      }
 
+     function score() {
+	 ctx.font = "20px Times New Roman";
+	 ctx.fillStyle = "White";
+	 ctx.fillText("Your score: " + numBricks, 75, 175);
+
+     }
+
 
      //END LIBRARY CODE
 
      function draw() {
+
 	 ctx.fillStyle = backcolor;
 	 clear();
 	 ctx.fillStyle = ballcolor;
 	 circle(x, y, 10);
+
 	 
 	 //move the paddle if left or right is on
 	 if (rightDown) paddlex += 5;
@@ -139,6 +153,8 @@
 	 if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
 	     dy = -dy;
 	     bricks[row][col] = 0;
+	     numBricks += 1;
+
 	 }
 	 
 	 if (x + dx > WIDTH || x + dx < 0)
@@ -152,8 +168,28 @@
 		 dy = -dy;
 	     }
 	     else
+	     {
 	      //gameover man! gameover!
+		 score();
+		 if (numBricks == 25){
+		     j = 0;
+		     for (i = 0;i < 15;i++){
+			 if (j < 5){
+			     ctx.fillStyle = rowcolors[j];
+			     j++;
+			 }
+			 else{
+			     j = 0;
+			     ctx.fillStyle = rowcolors[j];
+			 }
+			 ctx.fillText(colorending[i], 2 + ending, 150);
+			 ending += 20;
+			     
+			     
+		     }
+		 }
 		 clearInterval(intervalId);
+	     }
 	 }
 	 x += dx;
 	 y += dy;
