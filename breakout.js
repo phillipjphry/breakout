@@ -28,7 +28,7 @@
      var paddlecolor = "#FFFFFF";
      var ballcolor = "#FFFFFF";
      var backcolor = "#000000";
-     var colorending = ["I", "L", "O", "V", "E", "Y", "O", "U", "C", "R", "Y", "S", "T", "A", "L"];
+     var colorending = "I LOVE YOU CRYSTAL";
      var ending = 5;
      var topbar;
      var numBricks = 0;
@@ -97,6 +97,7 @@
 	 canvasMinX = $("#canvas").offset().left;
 	 canvasMaxX = canvasMinX + WIDTH
 	 intervalId =  setInterval(draw, 10);
+	 
      }
 
      function circle(x,y,r) {
@@ -130,6 +131,7 @@
 
      function draw() {
 
+	 //clear the screen and draw the ball
 	 ctx.fillStyle = backcolor;
 	 clear();
 	 ctx.fillStyle = ballcolor;
@@ -142,7 +144,19 @@
 	 ctx.fillStyle = paddlecolor;
 	 rect(paddlex, HEIGHT-paddleh, paddlew, paddleh);
 
+	 //draw the bricks
 	 drawbricks();
+
+	 //should we draw a triangle?
+	 if (Math.random() < .75)
+	 {
+	     ctx.beginPath();
+	     ctx.moveTo(125, 125);
+	     ctx.lineTo(45, 45);
+	     ctx.lineTo(45, 45);
+	     ctx.closePath();
+	     ctx.fill();
+	 }
 
 	 //have we hit a brick?
 	 rowheight = BRICKHEIGHT + PADDING;
@@ -157,8 +171,10 @@
 
 	 }
 	 
+	 //have we hit the side?
 	 if (x + dx > WIDTH || x + dx < 0)
 	     dx = -dx;
+	 
 	 
 	 if (y + dy < 0)
 	     dy = -dy;
@@ -173,7 +189,7 @@
 		 score();
 		 if (numBricks == 25){
 		     j = 0;
-		     for (i = 0;i < 15;i++){
+		     for (i = 0;i < colorending.length;i++){
 			 if (j < 5){
 			     ctx.fillStyle = rowcolors[j];
 			     j++;
@@ -182,15 +198,18 @@
 			     j = 0;
 			     ctx.fillStyle = rowcolors[j];
 			 }
+			 if (colorending[i] != " "){
 			 ctx.fillText(colorending[i], 2 + ending, 150);
 			 ending += 20;
-			     
+			 }    
 			     
 		     }
 		 }
+		 //end the animation
 		 clearInterval(intervalId);
 	     }
 	 }
+	 //move the ball
 	 x += dx;
 	 y += dy;
      }
