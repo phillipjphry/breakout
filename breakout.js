@@ -148,16 +148,16 @@
 	 drawbricks();
 
 	 //should we draw a triangle?
-	 if (Math.random() < .75)
+/*	 if (Math.random() < .75)
 	 {
 	     ctx.beginPath();
 	     ctx.moveTo(125, 125);
-	     ctx.lineTo(45, 45);
-	     ctx.lineTo(45, 45);
-	     ctx.closePath();
+no	     ctx.lineTo(45, 45);
+we	     ctx.lineTo(45, 45);
+shouldn't	     ctx.closePath();
 	     ctx.fill();
 	 }
-
+*/
 	 //have we hit a brick?
 	 rowheight = BRICKHEIGHT + PADDING;
 	 colwidth = BRICKWIDTH + PADDING;
